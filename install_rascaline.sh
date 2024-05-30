@@ -1,5 +1,5 @@
 #!/bin/bash
-+conda install -c conda-forge cxx-compiler gcc rust python=3.10
+conda install -c conda-forge cxx-compiler gcc rust python=3.10
 
 export PATH="$CONDA_PREFIX/bin:$PATH"
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
