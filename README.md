@@ -1,5 +1,5 @@
 # ShiftML
-Model to predict chemcial shieldings
+Model to predict chemcial shieldings.
 
 To install the dependencies create a fresh conda environment and run the following command:
 
