@@ -67,9 +67,9 @@ def cross_validation(frames, X, Y, alpha=np.logspace(-6, 3, 30),species=6):
     return model
 
 if __name__ == "__main__":
-    pathname = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "structure_files", "CSD-3k+S546_shift_tensors.xyz")
+    pathname = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "CSD-3k+S546_shift_tensors.xyz")
     frames_train_raw = ase.io.read(pathname,":")
-    pathname = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "structure_files", "CSD-500+104-7_shift_tensors.xyz")
+    pathname = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "CSD-500+104-7_shift_tensors.xyz")
     frames_test = ase.io.read(pathname,":")
     random.shuffle(frames_train_raw)
     #frames_train_raw = frames_train_raw[:NTRAIN]
