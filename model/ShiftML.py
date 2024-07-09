@@ -13,11 +13,22 @@ from metatensor.torch.atomistic import (
 )
 import torch
 
+#Output format for the Metatensor calculators
 StandardOutput = {
     "mtt::cs_iso": ModelOutput(quantity="", unit="ppm", per_atom=True),
 }
 
 def ShiftML(filename="exported-model.pt"):
+    '''
+    Function to generate the Metatensor calculator suitable for ASE.
+    input(optional):
+        filename: the file to store the Metatensor calculator, default named "exported-model.pt"
+    output:
+        metatensor: the Metatensor calculator, which includes:
+            model: `ShiftMLModel` defined in `model.py`
+            metadata: information of this model
+            capabilities: outputs information of the Metatensor calculator
+    '''
     model = ShiftMLModel()
     weights = [torch.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "parameter_files", f"coeff{species_id}.pt")).to(torch.float32) for species_id in [1,6,7,8,16]]
     biases = [torch.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "parameter_files", f"bias{species_id}.pt")).to(torch.float32) for species_id in [1,6,7,8,16]]
@@ -38,22 +49,20 @@ def ShiftML(filename="exported-model.pt"):
     model.initialize_from_weights(weights, biases, [1,6,7,8,16,], hypers_ps)
 
     metadata = ModelMetadata(
-        name="single-atom-energy",
-        description="a long form description of this specific model",
-        authors=["You the Reader <reader@example.com>"],
+        name="isotropic-chemical-shielding",
+        description="a chemical shielding calculation model of the SOAP model",
+        authors=["Yuxuan Zhang <yux.zhang@epfl.ch>"],
         references={
             # you can add references that should be cited when using this model here,
             # check the documentation for more information
         },
     )
 
-    outputs = {
-        "mtt::cs_iso": ModelOutput(quantity="", unit="ppm", per_atom=True),
-    }
+    outputs = StandardOutput
 
     capabilities = ModelCapabilities(
         outputs=outputs,
-        atomic_types=[1, 6, 8],
+        atomic_types=[1,6,7,8,16,],
         interaction_range=0.0,
         length_unit="",
         supported_devices=["cpu"],

@@ -1,14 +1,4 @@
-import sys
-import os
-
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "model"))
-
 from ShiftML import ShiftML, StandardOutput
-import ase
-from metatensor.torch.atomistic import(
-    ModelOutput
-)
-import torch
 from ase.build import bulk
 
 frame = bulk("C", "diamond", a=3.566)
