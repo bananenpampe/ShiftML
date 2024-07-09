@@ -15,6 +15,13 @@ python example.py
 ```
 The detailed usage of the model is included in the file `example.py`.
 
+First set directory for the python module loading as
+```python
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "model"))
+```
+
 To be specific, this file imports the modules as
 ```python
 from ShiftML import ShiftML, StandardOutput
