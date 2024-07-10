@@ -107,10 +107,12 @@ if __name__ == "__main__":
         Y_pred = model.predict(X_test)
         mse = mean_squared_error(Y_test, Y_pred, squared=False)
         print(f"rmse of species {species_id}:", mse, file=record_error)
-        pathname = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "parameter_files", f"element{species_id}.pkl")
-        with open(pathname, "wb") as f:
-            pickle.dump(model, f)
+        print(f"rmse of species {species_id}:", mse)
         print(f"calculating species {species_id} completed")
-        
+        bias = torch.tensor(model.intercept_, dtype=torch.float64)
+        coeffs = torch.tensor(model.coef_, dtype=torch.float64)
+        pathname = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "parameter_files", f"bias{species_id}.pt")
+        torch.save(bias, pathname)
+        pathname = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "parameter_files", f"coeff{species_id}.pt")
+        torch.save(coeffs, pathname)
     record_error.close()
-
