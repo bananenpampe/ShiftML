@@ -30,6 +30,7 @@ class ShiftML(torch.nn.Module):
                                 bias_list: List[torch.Tensor],
                                 unique_species: List[int],
                                 hypers: dict,
+                                dtype=torch.float32
                                 ):
         self.unique_species = torch.unique(torch.tensor(unique_species, dtype=torch.int32))
         '''
@@ -49,7 +50,7 @@ class ShiftML(torch.nn.Module):
         soap_labels = Labels("center_type", self.unique_species.reshape(-1,1))
 
         #Generate the linear layer
-        self.linear = Linear(soap_labels, soap_size, 1, [l_tmp for _ in unique_species], dtype=torch.float32)
+        self.linear = Linear(soap_labels, soap_size, 1, [l_tmp for _ in unique_species], dtype=dtype)
         
         #Generate the calculator object
         self.calculator = SoapPowerSpectrum(**self.hypers)
@@ -85,7 +86,7 @@ class ShiftML(torch.nn.Module):
         
         # get expanded soap
         Xsoap = self.calculator(systems).keys_to_properties(self.unique_pairs)
-
+        
         out = self.linear(Xsoap).keys_to_samples("center_type")
 
         # write a function
